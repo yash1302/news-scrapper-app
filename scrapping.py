@@ -99,6 +99,7 @@ class jsonInputData:
 def main():
     a = jsonInputData("c:\\Users\\yashvardhan_Jadhav\\Desktop\\config.json")
     yahoo=a.yahoo()
+    google = a.google()
     print(title)
 
      
