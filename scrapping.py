@@ -61,13 +61,45 @@ class jsonInputData:
         
         return title,heading,days,link
 
-    
+    def google(self):
+        search_eng = []
+        inputList = self.read_config()
+        global title
+        global heading
+        global link
+        global days
+
+        try:
+            for i,j,k in inputList:
+                result = requests.get(f"https://www.google.com/search?q='{i}'+'{j}'&sca_esv=600979061&rlz=1C1RXQR_enIN1092IN1092&tbm=nws&ei=v6uwZcfjKsOnvr0Pq5So4AQ&start={k}0&sa=N&ved=2ahUKEwiHv7fFsPWDAxXDk68BHSsKCkwQ8tMDegQIBBAE&biw=1318&bih=646&dpr=1")
+                soup = bs4.BeautifulSoup(result.text,"lxml")
+
+                news_1 = soup.find_all('div', attrs={'class':'Gx5Zad fP1Qef xpd EtOod pkphOe'})
+                news_2 = soup.find_all('a', attrs={'class':'tHmfQe'})
+
+                for i in news_1:
+                    title.append(i.find('h3', attrs={'class':'zBAuLc l97dzf'}).text)
+                    heading.append(i.find('div', attrs={'class':'BNeawe UPmit AP7Wnd lRVwie'}).text)
+                    days.append(i.find('span', attrs={'class':'r0bn4c rQMQod'}).text)
+                    link.append(i.a['href'])
+
+                for i in news_2:
+                    title.append(i.find('h3', attrs={'class':'zBAuLc l97dzf'}).text)
+                    heading.append(i.find('span', attrs={'class':'rQMQod aJyiOc'}).text)
+                    days.append(i.find('span', attrs={'class':'r0bn4c rQMQod'}).text)
+                    link.append(i['href'])
+
+        except:
+            logging.error("Error has occured")
+        
+        return title,heading,days,link
 
 
 
 def main():
     a = jsonInputData("c:\\Users\\yashvardhan_Jadhav\\Desktop\\config.json")
     yahoo=a.yahoo()
+    google = a.google()
     print(title)
 
      
