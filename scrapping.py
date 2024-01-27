@@ -60,15 +60,15 @@ class jsonInputData:
             logging.error("Error has occured")
         
         return title,heading,days,link
-
     
-
-
 
 def main():
     a = jsonInputData("c:\\Users\\yashvardhan_Jadhav\\Desktop\\config.json")
     yahoo=a.yahoo()
     print(title)
+    print(heading)
+    print(days)
+    print(link)
 
      
 

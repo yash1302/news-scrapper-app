@@ -25,7 +25,7 @@ class tp:
             # days.append(i.find('span',attrs={'class':'fc-2nd s-time mr-8'}).text)
             # link.append(i.find('h4', class_='s-title fz-16 lh-20').a['href'])
 
-    appendNews()
+    appendNews( ) 
     print(title)
 
 # for i in link:

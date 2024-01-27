@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import logging
 
-
 logging.basicConfig(level=logging.DEBUG, filename='logs.log', format='%(asctime)s %(levelname)s:%(message)s')
 
 # json file reading
@@ -220,27 +219,28 @@ for i in range(len(linky)):
     finalListEngine.append(search_engy[i])
 
 # converting days into date
-finalListDate = []
 for i in finalListDays:
-    if 'hours' in i:
-        j = int(re.search(r'\d+', i).group())
-        finalListDate.append(str(datetime.now() - timedelta(hours= j)))
-    elif 'days' in i:
-        j = int(re.search(r'\d+', i).group())
-        finalListDate.append(str(datetime.now() - timedelta(days= j)))
-    elif 'month' or 'months' in i:
-        j = int(re.search(r'\d+', i).group())
-        finalListDate.append(str(datetime.now() - relativedelta(months= j)))
-    elif 'year' or 'years' in i:
-        j = int(re.search(r'\d+', i).group())
-        finalListDate.append(str(datetime.now() - relativedelta(years= j)))
-logging.debug(f"{len(finalListDate)} Dates has been appended")
+    print(i)
+# for i in finalListDays:
+#     if 'hours' in i:
+#         j = int(re.search(r'\d+', i).group())
+#         finalListDate.append(str(datetime.now() - timedelta(hours= j)))
+#     elif 'days' in i:
+#         j = int(re.search(r'\d+', i).group())
+#         finalListDate.append(str(datetime.now() - timedelta(days= j)))
+#     elif 'month' or 'months' in i:
+#         j = int(re.search(r'\d+', i).group())
+#         finalListDate.append(str(datetime.now() - relativedelta(months= j)))
+#     elif 'year' or 'years' in i:
+#         j = int(re.search(r'\d+', i).group())
+#         finalListDate.append(str(datetime.now() - relativedelta(years= j)))
+# logging.debug(f"{len(finalListDate)} Dates has been appended")
 
 
-# entering into dataframes
-df = pd.DataFrame(list(zip(finalListTitle, finalListLink, finalListDate, finalListHeading,finalListEngine)), columns=['Title','Link', 'Date', 'Heading','Search Engine'])
-logging.info("DataFrame has been created")
+# # entering into dataframes
+# df = pd.DataFrame(list(zip(finalListTitle, finalListLink, finalListDate, finalListHeading,finalListEngine)), columns=['Title','Link', 'Date', 'Heading','Search Engine'])
+# logging.info("DataFrame has been created")
 
-# making csv files
-df.to_csv('output.csv', sep = ',')
-logging.info("Output file has been created")
+# # making csv files
+# df.to_csv('output.csv', sep = ',')
+# logging.info("Output file has been created")
