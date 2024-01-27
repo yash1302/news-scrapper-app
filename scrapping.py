@@ -94,6 +94,32 @@ class jsonInputData:
         
         return title,heading,days,link
 
+    def bing(self):
+
+    
+        inputList = self.read_config()
+        global title
+        global heading
+        global link
+        global days
+        
+        try:
+            for i,j,k in inputList:
+                response = requests.get(f"https://www.bing.com/news/search?q={i}+{j}urlnews/infinitescrollajax?page={k}")
+                soup = BeautifulSoup(response.text, 'lxml')
+                        
+                news = soup.find_all('div',attrs={'class':"caption"})
+
+                
+
+                for i in news:
+                    title.append(i.find('a', attrs={'class':'title'}).text)
+                    heading.append(i.find('div',attrs={'class':'source set_top'}).text)
+                    days.append(i.find('span',attrs={'tabindex':'0'}).text)
+                    link.append(i.find('a', class_='title').get('href'))
+                    
+        except :
+            logging.error("Error has occured")
 
 
 def main():
