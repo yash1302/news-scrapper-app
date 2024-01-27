@@ -11,6 +11,7 @@ title = []
 heading = []
 link = []
 days = []
+date=[]
 
 class jsonInputData:
 
@@ -120,6 +121,27 @@ class jsonInputData:
                     
         except :
             logging.error("Error has occured")
+
+    def convert_to_date(self):
+        global days
+        global date
+
+        for i in days:
+            if 'hours' in i:
+                j = int(re.search(r'\d+', i).group())
+                date.append(str(datetime.now() - timedelta(hours= j)))
+            elif 'days' in i:
+                j = int(re.search(r'\d+', i).group())
+                date.append(str(datetime.now() - timedelta(days= j)))
+            elif 'month' or 'months' in i:
+                j = int(re.search(r'\d+', i).group())
+                date.append(str(datetime.now() - relativedelta(months= j)))
+            elif 'year' or 'years' in i:
+                j = int(re.search(r'\d+', i).group())
+                date.append(str(datetime.now() - relativedelta(years= j)))
+
+        return date
+
 
 
 def main():
