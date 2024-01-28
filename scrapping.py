@@ -155,7 +155,7 @@ class jsonInputData:
         return self.date
     
     def dataframe(self): # Create dataframe and export it to csv file
-        #self.date = self.convert_to_date()
+        self.date = self.convert_to_date()
 
         df = pd.DataFrame(list(zip(self.search_string, self.title, self.heading, self.link, self.date, self.search_eng)), columns=['Search String', 'Title', 'Media', 'Link', 'Date', 'Search Engine']) # Dataframe containing search_string, title, heading, link, date, search_eng is created
         df.to_csv('output.csv') # Convert dataframe to csv file
