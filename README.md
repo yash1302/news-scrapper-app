@@ -6,7 +6,7 @@ Scraped Data - Search String, Title, Heading, Link, Date, Search Engine
 
 Input - config.json
 
-Main file - scrapping.py
+Main file - web_scraping.py
 
 Output - output.csv, logs.log
 
