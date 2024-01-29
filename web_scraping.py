@@ -19,10 +19,12 @@ class jsonInputData:
 
     logging.basicConfig(level=logging.DEBUG, filename='logs.log', format='%(asctime)s %(levelname)s:%(message)s')  # Create log file
 
+# Takes path of the config file as input 
     def __init__(self,config_file):
         self.config_file = config_file
         logging.info("Start of program execution") # Logs added to logs.log file
-    
+
+# Takes input from __init__ function and returns inputList    
     def read_config(self):
         with open(f"{self.config_file}","r") as file:
             jsonData = json.load(file)
@@ -33,6 +35,10 @@ class jsonInputData:
 
         return inputList
 
+# Takes input from read_config function and is used to scrape data from yahoo search engine
+# First it checks the page count and if the page count is less than the page count defined in config file,
+# then it formats the url string and scrape data based on the tag classes of the website
+# and stores in a common list defined in the class jsonInputData
     def yahoo(self): 
         inputList = self.read_config()
 
@@ -62,8 +68,10 @@ class jsonInputData:
 
         return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
         
-
-
+# Takes input from read_config function and is used to scrape data from google search engine
+# First it checks the page count and if the page count is less than the page count defined in config file,
+# then it formats the url string and scrape data based on the tag classes of the website
+# and stores in a common list defined in the class jsonInputData
     def google(self):
         inputList = self.read_config()
 
@@ -97,10 +105,15 @@ class jsonInputData:
 
         except Exception as e:
             #print(e)
-            logging.error("Error has occured")
+            logging.error(f"{e} Error has occured")
         
         return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
 
+
+# Takes input from read_config function and is used to scrape data from bing search engine
+# First it checks the page count and if the page count is less than the page count defined in config file,
+# then it formats the url string and scrape data based on the tag classes of the website
+# and stores in a common list defined in the class jsonInputData
     def bing(self):
         inputList = self.read_config()
 
@@ -131,7 +144,10 @@ class jsonInputData:
 
         return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
 
-    def convert_to_date(self): # Convert days list containing information about which hour/day/month/year article was published into datetime
+
+# Convert days list containing information about which hour/day/month/year article was published into datetime
+# Takes days list as input and convert it to datetime
+    def convert_to_date(self): 
 
         for i in self.days:
             if 'mins' or 'min' in i:
@@ -153,8 +169,11 @@ class jsonInputData:
         logging.debug("Date conversion has been implemented successfully") # Logs added to logs.log file
 
         return self.date
-    
-    def dataframe(self): # Create dataframe and export it to csv file
+
+
+# Create dataframe and export it to csv file
+# Takes search_string, title, heading, link, date, search_engine lists as input for dataframe conversion
+    def dataframe(self): 
         self.date = self.convert_to_date()
 
         df = pd.DataFrame(list(zip(self.search_string, self.title, self.heading, self.link, self.date, self.search_eng)), columns=['Search String', 'Title', 'Media', 'Link', 'Date', 'Search Engine']) # Dataframe containing search_string, title, heading, link, date, search_eng is created
@@ -166,7 +185,8 @@ class jsonInputData:
         return df
 
 
-def main(): # Call the methods of class here
+# Call the methods of class jsonInputData here
+def main(): 
     scrapping = jsonInputData("c:\\Users\\yashvardhan_Jadhav\\Desktop\\config.json")
 
     scrapping.yahoo()
