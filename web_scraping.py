@@ -6,6 +6,7 @@ import re
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import logging
+from urllib.request import HTTPError
 
 
 class jsonInputData:
@@ -62,6 +63,14 @@ class jsonInputData:
                 logging.debug("Data has been scraped in stored in list") # Logs added to logs.log file
                 print("Yahoo")
 
+        except HTTPError as he:
+            #print(he)
+            logging.error(f"{he} Error has occured")
+
+        except ConnectionError as ce:
+            #print(ce)
+            logging.error(f"{ce} Error has occured")
+
         except Exception as e:
             #print(e)
             logging.error("Error has occured")
@@ -103,6 +112,14 @@ class jsonInputData:
                 logging.debug("Data has been scraped in stored in list") # Logs added to logs.log file   
                 print("google")
 
+        except HTTPError as he:
+            #print(he)
+            logging.error(f"{he} Error has occured")
+
+        except ConnectionError as ce:
+            #print(ce)
+            logging.error(f"{ce} Error has occured")
+
         except Exception as e:
             #print(e)
             logging.error(f"{e} Error has occured")
@@ -137,6 +154,14 @@ class jsonInputData:
 
                 logging.debug("Data has been scraped and stored in list") # Logs added to logs.log file
                 print("Bing")
+
+        except HTTPError as he:
+            #print(he)
+            logging.error(f"{he} Error has occured")
+
+        except ConnectionError as ce:
+            #print(ce)
+            logging.error(f"{ce} Error has occured")
 
         except Exception as e:
             #print(e)
