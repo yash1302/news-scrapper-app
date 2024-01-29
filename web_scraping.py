@@ -150,19 +150,18 @@ class jsonInputData:
     def convert_to_date(self): 
 
         for i in self.days:
-            if 'mins' or 'min' in i:
+            if 'mins' or 'min' or 'm' in i:
                 j = int(re.search(r'\d+', i).group())
-                self.date.append(str(datetime.now() - timedelta(minutes= j)))
-            elif 'hours' or 'hour' or 'h' in i:
+            if 'hours' or 'hour' or 'h' in i:
                 j = int(re.search(r'\d+', i).group())
                 self.date.append(str(datetime.now() - timedelta(hours= j)))
-            elif 'days' or 'day' or 'd' in i:
+            if 'days' or 'day' or 'd' in i:
                 j = int(re.search(r'\d+', i).group())
                 self.date.append(str(datetime.now() - timedelta(days= j)))
-            elif 'month' or 'months' or 'm' in i:
+            if 'month' or 'months' or 'mon' in i:
                 j = int(re.search(r'\d+', i).group())
                 self.date.append(str(datetime.now() - relativedelta(months= j)))
-            elif 'year' or 'years' or 'y' in i:
+            if 'year' or 'years' or 'y' in i:
                 j = int(re.search(r'\d+', i).group())
                 self.date.append(str(datetime.now() - relativedelta(years= j)))
 
