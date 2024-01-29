@@ -1,0 +1,7 @@
+{
+    "input": {
+        "company": ["googe","Microsoft","Tesla","samsung"],
+        "keywords": ["AI","automation","Lawsuits","stocks","future"],
+        "TotalPages": 6
+    }
+}
