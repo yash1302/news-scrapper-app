@@ -210,7 +210,7 @@ class jsonInputData:
 
 
 # Call the methods of class jsonInputData here
-#Function serves as the entry point of program and contains main logic
+# Function serves as the entry point of program and contains main logic
 def main(): 
     scrapping = jsonInputData("c:\\Users\\yashvardhan_Jadhav\\Desktop\\config.json")
 
