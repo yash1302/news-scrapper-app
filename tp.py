@@ -25,6 +25,7 @@ def bing(self):
             ##print("hello")
             #print(title)
             #print(heading)
+            #print(days)
             
 
 ##            for i in range(len(title)):
