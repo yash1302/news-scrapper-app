@@ -33,6 +33,8 @@ class jsonInputData:   ##Class created
         # print(inputList)
         return inputList
 
+
+    ##yahoo function created
     def yahoo(self): 
         # title = []
         # heading = []
