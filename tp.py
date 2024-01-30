@@ -23,6 +23,7 @@ def bing(self):
                 link.append(i.find('a', class_='title').get('href'))
                 
             ##print("hello")
+              print(title)
 
 ##            for i in range(len(title)):
 ##                
