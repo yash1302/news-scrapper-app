@@ -214,6 +214,7 @@ class jsonInputData:
         return df
 
 # Call the methods of class here
+#Function serves as the entry point of program and contains main logic
 # Multithreading is implemented to reduce time required for implementation
 def main(): 
     scrapping = jsonInputData("c:\\Users\\yashvardhan_Jadhav\\Desktop\\config.json")
