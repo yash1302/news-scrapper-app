@@ -149,6 +149,7 @@ class jsonInputData:
                         
                 news = soup.find_all('div',attrs={'class':"caption"})
 
+
                 for i in news:
                     self.title.append(i.find('a', attrs={'class':'title'}).text) 
                     self.heading.append(i.find('div',attrs={'class':'source set_top'}).text) 
