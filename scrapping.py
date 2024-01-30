@@ -59,6 +59,8 @@ class jsonInputData:   ##Class created
             
                 news = soup.find_all('div',attrs={'class':"dd NewsArticle"})
 
+
+                ##For loop to retrieve data 
                 for i in news:
                     title.append(i.find('h4', attrs={'class':'s-title fz-16 lh-20'}).text)
                     heading.append(i.find('span',attrs={'class':'s-source mr-5 cite-co'}).text)
