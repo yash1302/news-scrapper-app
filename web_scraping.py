@@ -64,12 +64,12 @@ class jsonInputData:
                 
                 logging.debug("Data has been scraped in stored in list") # Logs added to logs.log file
                 print("Yahoo")
+            return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
 
         except Exception as e:
             #print(e)
             logging.error("Error has occured")
 
-        return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
         
 
 
@@ -103,12 +103,12 @@ class jsonInputData:
                 
                 logging.debug("Data has been scraped in stored in list") # Logs added to logs.log file   
                 print("google")
+            return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
 
         except Exception as e:
             #print(e)
             logging.error("Error has occured")
         
-        return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
 
     def bing(self):
         inputList, search_engines = self.read_config()
@@ -134,12 +134,13 @@ class jsonInputData:
 
                 logging.debug("Data has been scraped and stored in list") # Logs added to logs.log file
                 print("Bing")
+            return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
 
         except Exception as e:
             #print(e)
             logging.error("Error has occured")
 
-        return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
+
 
 # Convert days list containing information about which hour/day/month/year article was published into datetime
     def convert_to_date(self): 
