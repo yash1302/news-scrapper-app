@@ -15,10 +15,7 @@ pandas==2.2.0
 parso==0.8.3
 platformdirs==4.1.0
 psutil==5.9.8
-Pygments==2.17.2
 python-dateutil==2.8.2
 regex==2023.12.25
 requests==2.31.0
-six==1.16.0
 soupsieve==2.5
-wcwidth==0.2.13
