@@ -72,6 +72,8 @@ class jsonInputData:   ##Class created
         
         return title,heading,days,link, search_eng, search_string
 
+
+    ##Google function created
     def google(self):
         inputList = self.read_config()
         global title
