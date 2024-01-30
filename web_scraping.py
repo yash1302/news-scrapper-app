@@ -6,8 +6,8 @@ import re
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import logging
-from urllib.request import HTTPError
-
+import threading
+import time
 
 class jsonInputData:
     title = []
@@ -20,34 +20,36 @@ class jsonInputData:
 
     logging.basicConfig(level=logging.DEBUG, filename='logs.log', format='%(asctime)s %(levelname)s:%(message)s')  # Create log file
 
-# Takes path of the config file as input 
     def __init__(self,config_file):
         self.config_file = config_file
         logging.info("Start of program execution") # Logs added to logs.log file
-
-# Takes input from __init__ function and returns inputList    
+    
     def read_config(self):
         with open(f"{self.config_file}","r") as file:
             jsonData = json.load(file)
 
-        inputList = [[i,j,k] for i in jsonData['input'].get('company') for j in jsonData['input'].get('keyword') for k in range(0, jsonData['input'].get('PageNo'))]
+        inputList = [[i,j,k] for i in jsonData['input'].get('company') for j in jsonData['input'].get('keywords') for k in range(0, jsonData['input'].get('TotalPages'))]
 
-        logging.debug("Input list created") # Logs added to logs.log file
+        # searchEngine = [i for i in jsonData['search_engines']]
+        # print(searchEngine)
+        # Logs added to logs.log file
+        logging.debug("Input list created")
 
-        return inputList
+        search_engines = []
+        search_engines.append(jsonData['search_engines'].get('google'))
+        search_engines.append(jsonData['search_engines'].get('yahoo'))
+        search_engines.append(jsonData['search_engines'].get('bing'))
 
-# Takes input from read_config function and is used to scrape data from yahoo search engine
-# First it checks the page count and if the page count is less than the page count defined in config file,
-# then it formats the url string and scrape data based on the tag classes of the website
-# and stores in a common list defined in the class jsonInputData
+
+        return inputList, search_engines
+
     def yahoo(self): 
-        inputList = self.read_config()
-
+        inputList, search_engines = self.read_config()
 
         try:
-            for i,j,k in inputList:
-                input_search_string =f'{i} and {j}'
-                response = requests.get(f"https://in.news.search.yahoo.com/search;_ylt=AwrPrHDa8bFlRA4EagfAHAx.;_ylu=Y29sbwNzZzMEcG9zAzEEdnRpZAMEc2VjA3BhZ2luYXRpb24-?q='{i}'+'{j}'&b='{k}'1&pz=10&xargs=0") # Get information related to the news based on company and keywords
+            for company,keyword,pageno in inputList:
+                input_search_string =f'{company} and {keyword}'
+                response = requests.get(f"{search_engines[1]}{company}+{keyword}&b={pageno}1&pz=10&xargs=0") # Get information related to the news based on company and keywords
                 soup = bs4.BeautifulSoup(response.text, 'lxml')
             
                 news = soup.find_all('div',attrs={'class':"dd NewsArticle"})
@@ -63,31 +65,21 @@ class jsonInputData:
                 logging.debug("Data has been scraped in stored in list") # Logs added to logs.log file
                 print("Yahoo")
 
-        except HTTPError as he:
-            #print(he)
-            logging.error(f"{he} Error has occured")
-
-        except ConnectionError as ce:
-            #print(ce)
-            logging.error(f"{ce} Error has occured")
-
         except Exception as e:
             #print(e)
             logging.error("Error has occured")
 
         return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
         
-# Takes input from read_config function and is used to scrape data from google search engine
-# First it checks the page count and if the page count is less than the page count defined in config file,
-# then it formats the url string and scrape data based on the tag classes of the website
-# and stores in a common list defined in the class jsonInputData
+
+
     def google(self):
-        inputList = self.read_config()
+        inputList, search_engines = self.read_config()
 
         try:
-            for i,j,k in inputList:
-                input_search_string =f'{i} and {j}'
-                result = requests.get(f"https://www.google.com/search?q='{i}'+'{j}'&sca_esv=600979061&rlz=1C1RXQR_enIN1092IN1092&tbm=nws&ei=v6uwZcfjKsOnvr0Pq5So4AQ&start={k}0&sa=N&ved=2ahUKEwiHv7fFsPWDAxXDk68BHSsKCkwQ8tMDegQIBBAE&biw=1318&bih=646&dpr=1") # Get information related to the news based on company and keywords
+            for company,keyword,pageno in inputList:
+                input_search_string =f'{company} and {keyword}'
+                result = requests.get(f"{search_engines[0]}{company}+{keyword}&tbm=nws&start={pageno}0") # Get information related to the news based on company and keywords
                 soup = bs4.BeautifulSoup(result.text,"lxml")
 
                 news_1 = soup.find_all('div', attrs={'class':'Gx5Zad fP1Qef xpd EtOod pkphOe'})
@@ -112,32 +104,20 @@ class jsonInputData:
                 logging.debug("Data has been scraped in stored in list") # Logs added to logs.log file   
                 print("google")
 
-        except HTTPError as he:
-            #print(he)
-            logging.error(f"{he} Error has occured")
-
-        except ConnectionError as ce:
-            #print(ce)
-            logging.error(f"{ce} Error has occured")
-
         except Exception as e:
             #print(e)
-            logging.error(f"{e} Error has occured")
+            logging.error("Error has occured")
         
         return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
 
-
-# Takes input from read_config function and is used to scrape data from bing search engine
-# First it checks the page count and if the page count is less than the page count defined in config file,
-# then it formats the url string and scrape data based on the tag classes of the website
-# and stores in a common list defined in the class jsonInputData
     def bing(self):
-        inputList = self.read_config()
+        inputList, search_engines = self.read_config()
 
         try:
-            for i,j,k in inputList:
-                input_search_string =f'{i} and {j}'
-                response = requests.get(f"https://www.bing.com/news/search?q='{i}'+'{j}'urlnews/infinitescrollajax?page={k}") # Get information related to the news based on company and keywords
+            for company,keyword,pageno in inputList:
+                input_search_string =f'{company} and {keyword}'
+                 # Get information related to the news based on company and keywords
+                response = requests.get(f"{search_engines[2]}{company}+{keyword}urlnews/infinitescrollajax?page={pageno}")
                 soup = bs4.BeautifulSoup(response.text, 'lxml')
                         
                 news = soup.find_all('div',attrs={'class':"caption"})
@@ -155,28 +135,20 @@ class jsonInputData:
                 logging.debug("Data has been scraped and stored in list") # Logs added to logs.log file
                 print("Bing")
 
-        except HTTPError as he:
-            #print(he)
-            logging.error(f"{he} Error has occured")
-
-        except ConnectionError as ce:
-            #print(ce)
-            logging.error(f"{ce} Error has occured")
-
         except Exception as e:
             #print(e)
             logging.error("Error has occured")
 
         return self.title, self.heading, self.days, self.link, self.search_eng, self.search_string
 
-
 # Convert days list containing information about which hour/day/month/year article was published into datetime
-# Takes days list as input and convert it to datetime
     def convert_to_date(self): 
+        day_convert = [i for i in self.days]
 
         for i in self.days:
             if 'mins' or 'min' or 'm' in i:
                 j = int(re.search(r'\d+', i).group())
+                self.date.append(str(datetime.now() - timedelta(minutes= j)))
             if 'hours' or 'hour' or 'h' in i:
                 j = int(re.search(r'\d+', i).group())
                 self.date.append(str(datetime.now() - timedelta(hours= j)))
@@ -189,19 +161,17 @@ class jsonInputData:
             if 'year' or 'years' or 'y' in i:
                 j = int(re.search(r'\d+', i).group())
                 self.date.append(str(datetime.now() - relativedelta(years= j)))
-
+        # for i in self.date:
+        #     print(i)
         logging.debug("Date conversion has been implemented successfully") # Logs added to logs.log file
 
         return self.date
-
-
-# Create dataframe and export it to csv file
-# Takes search_string, title, heading, link, date, search_engine lists as input for dataframe conversion
-    def dataframe(self): 
+    
+    def dataframe(self): # Create dataframe and export it to csv file
         self.date = self.convert_to_date()
 
         df = pd.DataFrame(list(zip(self.search_string, self.title, self.heading, self.link, self.date, self.search_eng)), columns=['Search String', 'Title', 'Media', 'Link', 'Date', 'Search Engine']) # Dataframe containing search_string, title, heading, link, date, search_eng is created
-        df.to_csv('output1.csv') # Convert dataframe to csv file
+        df.to_csv('main.csv') # Convert dataframe to csv file
         print(df.head())
 
         logging.debug("Dataframe created and exported to csv") # Logs added to logs.log file
@@ -209,15 +179,31 @@ class jsonInputData:
         return df
 
 
-# Call the methods of class jsonInputData here
-# Function serves as the entry point of program and contains main logic
-def main(): 
+def main(): # Call the methods of class here
     scrapping = jsonInputData("c:\\Users\\yashvardhan_Jadhav\\Desktop\\config.json")
 
-    scrapping.yahoo()
-    scrapping.google() 
-    scrapping.bing()
+    p1 = threading.Thread(target=scrapping.yahoo)
+    p2 = threading.Thread(target=scrapping.google)
+    p3 = threading.Thread(target=scrapping.bing)
+
+    p1.start()
+    p2.start()
+    p3.start()
+
+    p1.join()
+    p2.join()
+    p3.join()
+
+    # scrapping.yahoo()
+    # scrapping.google()
+    # scrapping.bing()
+
     scrapping.dataframe()
+    # for i in scrapping.days:
+    #     print(i)
 
 if __name__ == "__main__":
+    time_start = time.time()
     main()
+    time_end = time.time()
+    print(f"Time difference: {time_end - time_start}")
