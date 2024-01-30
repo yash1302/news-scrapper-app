@@ -15,7 +15,8 @@ date=[]
 search_eng = []
 search_string = []
 
-class jsonInputData:
+class jsonInputData:   ##Class created
+    
 
     logging.basicConfig(level=logging.DEBUG, filename='logs.log', format='%(asctime)s %(levelname)s:%(message)s')
 
