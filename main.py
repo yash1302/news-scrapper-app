@@ -16,9 +16,9 @@ with open("C:\\Users\\yashvardhan_Jadhav\\Desktop\\config.json","r") as file:
     jsonData = json.load(file)
 
 # list created for taking input from json files
-companies= []
+cpmpanies= []
 services = []
-page_no = []
+page_no= []
 
 # fetching info from json file and adding in list
 for infos in jsonData:
