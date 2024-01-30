@@ -26,6 +26,7 @@ def bing(self):
             #print(title)
             #print(heading)
             #print(days)
+            #print(link)
             
 
 ##            for i in range(len(title)):
