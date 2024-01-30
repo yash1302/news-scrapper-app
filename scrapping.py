@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import logging
 
+##Empty list created
 title = []
 heading = []
 link = []
