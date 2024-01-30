@@ -1,7 +1,12 @@
 {
+    "search_engines":{
+        "google":"https://www.google.com/search?q=",
+        "yahoo" :"https://in.news.search.yahoo.com/search;?q=",
+        "bing" : "https://www.bing.com/news/search?q="
+    },
     "input": {
-        "company": ["googe","Microsoft","Tesla","samsung"],
-        "keywords": ["AI","automation","Lawsuits","stocks","future"],
-        "TotalPages": 6
+        "company": ["microsoft","google", "apple"],
+        "keywords": ["AI", "AI Tools"],
+        "TotalPages": 3
     }
 }
