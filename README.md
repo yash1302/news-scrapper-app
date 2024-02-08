@@ -15,13 +15,13 @@ This Python script is designed to Scrape news from three search Engines Google,Y
 - Required Python libraries (install via `pip install -r requirements.txt`):
   - `bs4`
   - `requests`
-  - 
+    
 ## Installation
 
 1. Clone the repository:
 
    ```bash
-   https://github.com/yash1302/PDF-Extractor-App.git
+   https://github.com/yash1302/news-scrapper-app.git
    ```
 
 2. Navigate to the project directory:
