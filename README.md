@@ -12,4 +12,4 @@ Output - output.csv, logs.log
 
 -Note: Run the requirements.txt for installing necessary libraries file before you run the scrapping.py
 
-Group Members: Aditi Khot, Yashwardhan Jadhav, Keshav Oza, Devki Raut, Durvesh Zagade
+Group Members: Aditi Khot, Yashvardhan Jadhav, Keshav Oza, Devki Raut, Durvesh Zagade
