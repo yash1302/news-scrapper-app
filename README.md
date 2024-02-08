@@ -1,15 +1,70 @@
-# News Web Scraping Using Python
+ # news-scrapper-App
 
-Web Scraping using Python for three search engines - Yahoo, Google, Bing
+This Python script is designed to Scrape news from three search Engines Google,Yahoo and bing using beautifulSoup
 
-Scraped Data - Search String, Title, Heading, Link, Date, Search Engine
+## Table of Contents
 
-Input - config.json
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
 
-Main file - web_scraping.py
+## Prerequisites
 
-Output - output.csv, logs.log
+- Python 3.x
+- Required Python libraries (install via `pip install -r requirements.txt`):
+  - `bs4`
+  - `requests`
+  - 
+## Installation
 
--Note: Run the requirements.txt for installing necessary libraries file before you run the scrapping.py
+1. Clone the repository:
 
-Group Members: Aditi Khot, Yashvardhan Jadhav, Keshav Oza, Devki Raut, Durvesh Zagade
+   ```bash
+   https://github.com/yash1302/PDF-Extractor-App.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd newsScrapperApp
+   ```
+3. Setup virtual environment:
+   ```bash
+   python -m venv venv
+   ```
+4. Activate virtual environment:
+   ```bash
+   source venv/Scripts/activate
+   ```
+   
+6. Install the required dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Usage
+
+1. Edit the `config.json` file to configure the URL and Number of pages to extract information from.
+
+2. Run the main script:
+
+   ```bash
+   python main.py
+   ```
+
+3. The extracted information will be stored in `output.json` file in the project directory.
+
+## Configuration
+
+- **config.json**: This file contains the input configuration for the script i.e. URL of the PDF file and number of pages to extract information from.
+
+## Author
+- Yashvardhan Jadhav
+- Aditi Khot
+- Keshav Oza
+- Devki Raut
+- Durvesh Zagade
+
+
